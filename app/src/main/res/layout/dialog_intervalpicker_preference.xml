@@ -26,6 +26,24 @@
             android:orientation="vertical"
             >
             <TextView
+                android:text="@string/time_format_hour"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <NumberPicker
+                android:id="@+id/dialog_seekbar_preference_hr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
                 android:text="@string/time_format_min"
                 android:gravity="center"
                 android:layout_width="match_parent"

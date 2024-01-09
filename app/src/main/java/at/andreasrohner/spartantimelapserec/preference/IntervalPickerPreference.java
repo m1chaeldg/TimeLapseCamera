@@ -17,6 +17,8 @@ public class IntervalPickerPreference extends DialogPreference {
 	private NumberPicker mSecondsPicker;
 	private NumberPicker mMinutesPicker;
 
+	private NumberPicker mHoursPicker;
+
 	public IntervalPickerPreference(Context context, AttributeSet attrs) {
 
 		super(context, attrs);
@@ -48,15 +50,20 @@ public class IntervalPickerPreference extends DialogPreference {
 
 		mMinutesPicker = (NumberPicker) v.findViewById(R.id.dialog_seekbar_preference_minutes);
 		mMinutesPicker.setMinValue(0);
-		mMinutesPicker.setMaxValue(10);
-		mMinutesPicker.setValue((mValue-mSecondsPicker.getValue()*1000-mMilliPicker.getValue()*10)/60000);
+		mMinutesPicker.setMaxValue(59);
+		mMinutesPicker.setValue((mValue-mSecondsPicker.getValue()*1000-mMilliPicker.getValue()*10)/60000%60);
+
+		mHoursPicker = (NumberPicker) v.findViewById(R.id.dialog_seekbar_preference_hr);
+		mHoursPicker.setMinValue(0);
+		mHoursPicker.setMaxValue(24);
+		mHoursPicker.setValue((mValue-mSecondsPicker.getValue()*1000-mMilliPicker.getValue()*10-mMinutesPicker.getValue()*60000)/3600000);
 
 	}
 
 	@Override
 	protected void onDialogClosed(boolean positiveResult) {
 		if (positiveResult) {
-			mValue=mMinutesPicker.getValue()*60000+mSecondsPicker.getValue()*1000+mMilliPicker.getValue()*10;
+			mValue=mHoursPicker.getValue()*3600000 + mMinutesPicker.getValue()*60000+mSecondsPicker.getValue()*1000+mMilliPicker.getValue()*10;
 			persistInt(mValue);
 		}
 	}
